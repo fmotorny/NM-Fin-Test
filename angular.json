@@ -1,0 +1,201 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "client": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/client/browser",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.app.json",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.scss"
+            ],
+            "scripts": [],
+            "vendorChunk": true,
+            "extractLicenses": false,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": true
+          },
+          "configurations": {
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            },
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "buildTarget": "client:build"
+          },
+          "configurations": {
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true
+            },
+            "production": {
+              "buildTarget": "client:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "buildTarget": "client:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "src/test.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.spec.json",
+            "karmaConfig": "karma.conf.js",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/purple-green.css",
+              "src/styles.scss"
+            ],
+            "scripts": []
+          }
+        },
+        "e2e": {
+          "builder": "@angular-devkit/build-angular:protractor",
+          "options": {
+            "protractorConfig": "e2e/protractor.conf.js",
+            "devServerTarget": "client:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "client:serve:production"
+            }
+          }
+        },
+        "server": {
+          "builder": "@angular-devkit/build-angular:server",
+          "options": {
+            "outputPath": "dist/client/server",
+            "main": "server.ts",
+            "tsConfig": "tsconfig.server.json",
+            "buildOptimizer": false,
+            "optimization": false,
+            "sourceMap": true,
+            "extractLicenses": false,
+            "vendorChunk": true
+          },
+          "configurations": {
+            "development": {
+              "optimization": false,
+              "sourceMap": true,
+              "extractLicenses": false
+            },
+            "production": {
+              "buildOptimizer": true,
+              "outputHashing": "media",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "sourceMap": false,
+              "extractLicenses": true,
+              "vendorChunk": false
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve-ssr": {
+          "builder": "@angular-devkit/build-angular:ssr-dev-server",
+          "configurations": {
+            "development": {
+              "browserTarget": "client:build:development",
+              "serverTarget": "client:server:development"
+            },
+            "production": {
+              "browserTarget": "client:build:production",
+              "serverTarget": "client:server:production"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "prerender": {
+          "builder": "@angular-devkit/build-angular:prerender",
+          "options": {
+            "routes": [
+              "/"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "client:build:production",
+              "serverTarget": "client:server:production"
+            },
+            "development": {
+              "browserTarget": "client:build:development",
+              "serverTarget": "client:server:development"
+            }
+          },
+          "defaultConfiguration": "production"
+        }
+      }
+    }
+  },
+  "cli": {
+    "analytics": "fa1e8b50-e624-42fd-9564-a9c98d1ad337"
+  }
+}
