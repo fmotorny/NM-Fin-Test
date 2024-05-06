@@ -1,0 +1,96 @@
+<div class="box">
+  <div class="title">
+    <strong>Add TODO</strong>
+    <button type="button" class="btn btn-light" (click)="back()">Back</button>
+  </div>
+
+  <div class="form_box">
+    <div class="form_field">
+      <input
+        type="text"
+        class="form-control"
+        [formControl]="todoForm.controls.title"
+        placeholder="Enter title"
+      />
+
+      <div
+        *ngIf="
+          todoForm.controls.title.touched &&
+          todoForm.controls.title.dirty &&
+          !todoForm.controls.title.value
+        "
+        class="invalid-feedback"
+      >
+        Please set a title
+      </div>
+
+      <div
+        *ngIf="todoForm.controls.title.hasError('lengthError')"
+        class="invalid-feedback"
+      >
+        maxLength 100
+      </div>
+    </div>
+    <div class="form_field">
+      <input
+        type="text"
+        class="form-control"
+        [formControl]="todoForm.controls.expirationDate"
+        [matDatepicker]="dp"
+        placeholder="Enter date"
+        (click)="dp.open()"
+      />
+      <mat-datepicker #dp></mat-datepicker>
+
+      <div
+        *ngIf="
+          todoForm.controls.expirationDate.touched &&
+          todoForm.controls.expirationDate.dirty &&
+          !todoForm.controls.expirationDate.value
+        "
+        class="invalid-feedback"
+      >
+        Please set a date
+      </div>
+      <div
+        *ngIf="
+          todoForm.controls.expirationDate.hasError('dateError') &&
+          todoForm.controls.expirationDate.value
+        "
+        class="invalid-feedback"
+      >
+        expiration date не может быть меньше текущей даты
+      </div>
+    </div>
+
+    <div class="form_field">
+      <input
+        type="text"
+        class="form-control"
+        [formControl]="todoForm.controls.expirationTime"
+        [ngxTimepicker]="picker"
+        [format]="24"
+        placeholder="Enter time"
+      />
+      <ngx-material-timepicker
+        (timeSet)="timeSet()"
+        #picker
+      ></ngx-material-timepicker>
+      <div
+        *ngIf="
+          todoForm.controls.expirationTime.hasError('timeError') &&
+          todoForm.controls.expirationTime.value
+        "
+        class="invalid-feedback"
+      >
+        expiration time не может быть меньше текущего времени
+      </div>
+    </div>
+
+    <div class="form_field">
+      <button [disabled]="todoForm.disabled" (click)="addToList()" type="button" class="btn btn-primary">
+        Create
+      </button>
+    </div>
+  </div>
+</div>

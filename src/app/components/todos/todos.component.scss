@@ -1,0 +1,93 @@
+:host {
+  margin-top: 20px;
+  display: block;
+  .todo_list {
+    border: 1px solid #e7e7e7;
+    .head {
+      padding: 20px;
+      background: #e5e5e5;
+      font-size: 14px;
+      font-weight: bold;
+    }
+  }
+  .wrap {
+    padding: 20px;
+  }
+  .item_todo {
+    display: flex;
+    text-align: center;
+    border: 1px solid #e7e7e7;
+    height: 40px;
+    align-items: center;
+    .title {
+      flex: 1;
+      text-align: left;
+      padding-left: 10px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .created {
+      width: 150px;
+    }
+    .expired {
+      width: 150px;
+    }
+    .favorite,
+    .remove {
+      width: 50px;
+      justify-content: center;
+      display: flex;
+    }
+  }
+  .column_names {
+    display: flex;
+    .title {
+      flex: 1;
+      padding-left: 10px;
+    }
+    .created,
+    .expired {
+      font-size: 12px;
+      font-weight: bold;
+      width: 150px;
+      text-align: center;
+      padding-bottom: 3px;
+    }
+    .favorite,
+    .remove {
+      width: 50px;
+    }
+  }
+  button {
+    border: none;
+    background: none;
+    display: flex;
+  }
+}
+
+@media screen and (max-width: 959px) {
+  :host {
+    .column_names {
+      display: none;
+    }
+
+    .item_todo {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      height: auto;
+      padding: 10px;
+      .title {
+        flex-basis: 100%;
+        padding-bottom: 10px;
+      }
+      .created,
+      .expired,
+      .favorite,
+      .remove {
+        flex: 1;
+      }
+    }
+  }
+}

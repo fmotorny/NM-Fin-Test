@@ -1,0 +1,20 @@
+<ng-container *ngIf="!(snapData$ | async)?.isFavorite; else favoriteTemplate">
+  <app-todos
+    [type]="todosType.Today"
+    [todos]="todayTodos$ | async"
+    head="Today TODO's"
+  ></app-todos>
+  <app-todos
+    [type]="todosType.Other"
+    [todos]="otherTodos$ | async"
+    head="My Todo List"
+  ></app-todos>
+</ng-container>
+
+<ng-template #favoriteTemplate>
+  <app-todos
+    [type]="todosType.Favorite"
+    [todos]="favoriteTodos$ | async"
+    head="Favorite TODO's"
+  ></app-todos>
+</ng-template>

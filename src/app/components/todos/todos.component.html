@@ -1,0 +1,51 @@
+<div class="todo_list" *ngIf="todos?.length">
+  <div class="head">{{ head }}</div>
+  <div class="wrap">
+    <div class="column_names">
+      <div class="title"></div>
+      <div class="created">CreatedAt</div>
+      <div *ngIf="type !== todosType.Favorite" class="expired">
+        {{ type === todosType.Today ? "Time left" : "Expiration" }}
+      </div>
+      <div class="favorite"></div>
+      <div class="remove"></div>
+    </div>
+    @for (item of todos; track item) {
+      <div class="item_todo">
+        <div class="title">{{ item.title }}</div>
+        <div class="created">{{ item.createdAt }}</div>
+        <div *ngIf="type !== todosType.Favorite" class="expired">
+          <ng-container *ngIf="type === todosType.Today; else dateExpired">
+            <app-countdown
+              *ngIf="item.expirationTime"
+              [time]="item.expirationTime"
+            ></app-countdown>
+          </ng-container>
+          <ng-template #dateExpired>
+            {{ item.expirationDate }}
+          </ng-template>
+        </div>
+        <div class="favorite">
+          <button [disabled]="isDisabled">
+            <mat-icon
+              (click)="toggleFavoriteItem(item)"
+              [ngStyle]="item.isFavorite ? { color: 'red' } : { color: '#333' }"
+              >favorite</mat-icon
+            >
+          </button>
+        </div>
+        <div class="remove">
+          <button
+            [disabled]="isDisabled"
+            *ngIf="type !== todosType.Favorite"
+            (click)="removeItem(item)"
+          >
+            <mat-icon [ngStyle]="{ color: '#333' }" fontIcon=""
+              >delete</mat-icon
+            >
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+</div>
